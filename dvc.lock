@@ -1,0 +1,57 @@
+schema: '2.0'
+stages:
+  generate:
+    cmd: python src/generate_data.py
+    deps:
+    - path: src/generate_data.py
+      hash: md5
+      md5: 8499a2abf688368f907285820442589b
+      size: 307
+    outs:
+    - path: data/raw/data.csv
+      hash: md5
+      md5: d93953821e80890600af79901d88a410
+      size: 3689
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/data.csv
+      hash: md5
+      md5: d93953821e80890600af79901d88a410
+      size: 3689
+    - path: src/preprocess.py
+      hash: md5
+      md5: 8610b28a974546729a7e8406f8a1f610
+      size: 248
+    outs:
+    - path: data/processed/data.csv
+      hash: md5
+      md5: ffde1e5dc31933f84c0942f467004087
+      size: 3764
+  feature:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/data.csv
+      hash: md5
+      md5: ffde1e5dc31933f84c0942f467004087
+      size: 3764
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 099f1d9efd2b6fddb5cc2c6164b00513
+      size: 241
+    outs:
+    - path: data/features/data.csv
+      hash: md5
+      md5: 3e1d2f8e3d042900f1a532c663e4b9db
+      size: 5690
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/features/data.csv
+      hash: md5
+      md5: 3e1d2f8e3d042900f1a532c663e4b9db
+      size: 5690
+    - path: src/train.py
+      hash: md5
+      md5: af9fabb898332e6e4e29df24bf784335
+      size: 598
